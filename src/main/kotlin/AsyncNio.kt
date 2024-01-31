@@ -8,7 +8,7 @@ import kotlin.system.measureTimeMillis
 
 private val logger = KotlinLogging.logger {}
 
-val single = Schedulers.newSingle("worker")
+private val single = Schedulers.newSingle("worker")
 
 fun main() {
     measureTimeMillis {
