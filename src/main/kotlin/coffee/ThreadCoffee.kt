@@ -11,7 +11,7 @@ val executor = Executors.newFixedThreadPool(3)
 
 fun main() {
     measureTimeMillis {
-        repeat(2) {
+        repeat(10) {
             makeCoffee();
         }
         executor.shutdown()
