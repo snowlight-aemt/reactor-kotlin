@@ -10,18 +10,21 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 private val logger = KotlinLogging.logger {}
-private val single = newSingleThreadContext("worker")
 
 // WorkNotClosed 와 비교 해보자
 fun main() {
     measureTimeMillis {
         runBlocking {
-            var taskWorkHard = launch(single) { workHard() }
-            launch(single) { workEasy() }
+//            launch(single) { workHard() }
+//            launch(single) { workEasy() }
+
+// 코루트 취소 방법
+            val taskWorkHard = launch { workHard() }
+            launch { workEasy() }
 
             delay(3.seconds)
             taskWorkHard.cancel()
-            logger.debug { "End" }
+            logger.debug { "End !!" }
         }
     }.let { logger.debug {">> elasped : $it ms"} }
 }
@@ -32,8 +35,9 @@ private suspend fun workHard() {
     try {
         while(true) {delay(100.milliseconds) }
     } finally {
-        logger.debug { "end hard work " }
+        logger.debug { "(try) end hard work " }
     }
+    logger.debug { "end hard work " }
 }
 
 private suspend fun workEasy() {

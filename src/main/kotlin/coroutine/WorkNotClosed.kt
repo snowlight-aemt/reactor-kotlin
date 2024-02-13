@@ -10,13 +10,12 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 private val logger = KotlinLogging.logger {}
-private val single = newSingleThreadContext("worker")
 
 fun main() {
     measureTimeMillis {
         runBlocking {
-            launch(single) { workHard() }
-            launch(single) { workEasy() }
+            launch { workHard() }
+            launch { workEasy() }
         }
     }.let { logger.debug {">> elasped : $it ms"} }
 }
@@ -24,7 +23,9 @@ fun main() {
 private suspend fun workHard() {
     logger.debug { "start hard work " }
 //    delay(3.seconds)
-    while(true) { }
+    while(true) {
+
+    }
     logger.debug { "end hard work " }
 }
 
